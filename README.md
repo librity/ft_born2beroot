@@ -8,6 +8,7 @@
 
 The Master Boot Record Partition scheme only allows for 4 primary partitions.
 To get around this we create an extended partition that contains logical partitions.
+Windows can't boot from logical partitions, only primary one.
 
 ### LVM (Logical Volume Management)
 
