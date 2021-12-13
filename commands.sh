@@ -6,9 +6,12 @@ lsblk
 cat /etc/os-release
 head -n 2 /etc/os-release
 
-# Returns AppArmor status.
+# Returns apparmor status.
 /usr/sbin/aa-status
 /usr/bin/aa-enabled
+# Enable the apparmor daemon and check
+systemctl enable apparmor
+systemctl status apparmor
 
 # Login and out
 login
@@ -17,9 +20,8 @@ exit
 CTRL+D
 
 # Shutdown is safer than poweroff
-shutdown
 shutdown now
-reboot
+reboot now
 poweroff
 
 # Set a static IP
@@ -41,22 +43,45 @@ iface INTERFACENAME inet static
       netmask SOMETHING
       gateway SOMETHING
 iface INTERFACENAME inet static"
+# Reboot for changes to take effect
+reboot now
 # Check if we have internet by pinging google's DNS server
 ping 8.8.8.8
-# Dump statistics about open tunnel sockets. Similar to netstat.
+# Check if there's no longer an open dhcp client port (UDP 68).
 ss -tunlp
+# ss lists open tunnel sockets. Similar to netstat.
 
 # The file that lists all users and some configuration data associated with them.
-cat /etc/passwd
+cat /etc/passwd | cut -d ":" -f 1 | grep root
+# Lists all logged-in users
+users
+# Creates a new user
+useradd USERNAME
+# Creates a new user with home dir
+adduser USERNAME
+# Change user's username, home dir and group
+usermod -l NEWNAME OLDNAME
+usermod -d /home/NEWNAME -m NEWNAME
+groupmod -n NEWNAME OLDNAME
+# Deletes user and user's home dir
+userdel -r USERNAME
+
 # List groups associated with the user
 id USERNAME
 groups USERNAME
 # List of all groups
-cat /etc/group
-# Adds the user to the group
-addgroup USERNAME GROUPNAME
+cat /etc/group | cut -d ":" -f 1 | grep sudo
 # Creates a group
 groupadd GROUPNAME
+# Deletes a group
+groupdel GROUPNAME
+# Adds the user to the group
+addgroup USERNAME GROUPNAME
+gpasswd -a USERNAME GROUPNAME
+# Removes user from group
+gpasswd -d USERNAME GROUPNAME
+# Returns user's main group GID
+id -g USERNAME
 
 # Shows user's password aging information
 chage -l USERNAME
@@ -86,27 +111,35 @@ hostnamectl set-hostname NEWHOSTNAME
 # Manually change the hostname on /etc/hosts to remove sudo error:
 nano /etc/hosts
 
-# Change user's username, home dir and group
-usermod -l NEWNAME OLDNAME
-usermod -d /home/NEWNAME -m NEWNAME
-groupmod -n NEWNAME OLDNAME
-
 # Program that lets some users run
 sudo
-# Add user to sudoers so he can sudo too
-sudo adduser USERNAME
-# Open sudo config file with nano
+# Open sudo config file with nano or vim and add the required rules
 nano /etc/sudoers
-# Open sudo config file with vim
 sudo visudo
+"Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\"
+Defaults        badpass_message=\"CUSTOM MESSAGEE\"
+Defaults        requiretty
+Defaults        passwd_tries=3
+Defaults        logfile=\"/var/log/sudo/sudo.log\""
+# requiretty - If set, sudo will only run when the user is logged in to a real tty.
+# When this flag is set, sudo can only be run from a login session
+# and not via other means such as cron(8) or cgi-bin scripts.
+# This flag is off by default.
+# Create the log file
+sudo mkdir /var/log/sudo
+sudo touch /var/log/sudo/sudo.log
 # Open sudo access logs
-cd /var/log/sudo/ && cat log_sudo
+sudo cat /var/log/sudo/sudo.log
 
-# Install Uncomplicated Firewall (ufw) in your machine
+# Install and enable Uncomplicated Firewall (ufw) in your machine
 apt-get install ufw
+ufw enable
+systemctl enable ufw
+# Disable ufw
+ufw disable
 # Script that prints ufw status.
 /usr/sbin/ufw status
-ufw status
+ufw status verbose
 # Creates an allow rule for the port
 ufw allow PORTNUM
 # List rules with rule number
@@ -114,15 +147,28 @@ ufw status numbered
 # Deletes rule
 ufw delete RULENUMBER
 
+# Install openssh-server
+apt-get install openssh-server
+dpkg -l | grep ssh
 # systemctl allows you to control the state of systemd deamons (services)
 # Returns the status of the ssh deamon running in the background.
-systemctl status ssh
-# Open ssh daemon config with nano
+systemctl status sshs
+service sshs status
+# Enable sshd
+systemctl enable sshd
+# Open ssh daemon config with nano and add the rules
 nano /etc/ssh/sshd_config
-# Log into ssh as root through port 4242
+"Port 4242
+PermitRootLogin no"
+# Restart sshd and verify changes
+systemctl restart sshd
+ss -tunlp
+# Connect through ssh through port 4242 from within the VM
 ssh -p 4242 root@localhost
-# Log into ssh as USERNAME through port 4242
-ssh -p 4242 USERNAME@localhost
+ssh -p 4242 lpaulo-m@localhost
+# Connect through ssh through port 4242 from outside
+ssh -p 4242 root@192.168.0.15
+ssh -p 4242 lpaulo-m@192.168.0.15
 
 # General kernel and system information, all flags.
 uname -a

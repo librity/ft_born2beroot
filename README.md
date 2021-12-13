@@ -1,6 +1,6 @@
 # ft_born2beroot
 
-42 Sao Paulo project - Born2BeRoot
+42 São Paulo project - Born2BeRoot
 
 ## Notes
 
@@ -15,23 +15,29 @@ Windows can't boot from logical partitions, only primary one.
 A device mapper framework that provides logical volume management,
 i.e. the creation and use of logical partitions.
 
+### systemd
+
+A software suite that provides an array of system components.
+Arch, CentOS, CoreOS, Debian, Fedora, Linux, Mageia,
+Manjaro, openSUSE, Red, Solus, SUSE and Ubuntu come with it by default.
+
 ### Linux directory structure
 
 - `/`: The root directory
 - `/bin`: Binaries accessible to everyone
-- `/dev`: Device files
+- `/dev`: Device files, like logical volumes
 - `/etc`: Configuration files
 - `/usr`: User binaries and program data
   - `/usr/bin`: contains basic user commands
   - `/usr/sbin`: contains additional commands for the administrator
   - `/usr/lib`: contains the system libraries
-  - `/usr/share`: contains documentation or common to all libraries, like `/usr/share/man`.
+  - `/usr/share`: contains documentation or common to all libraries, like `/usr/share/man`
 - `/home`: User personal data
 - `/lib`: Shared libraries
 - `/sbin`: System/Super/Sudo binaries (that can only be run by root or a sudo user)
 - `/tmp`: Temporary files
 - `/var`: Variable data files (like logs)
-- `/boot`: Boot files, usually a separate partition is mounted here.
+- `/boot`: Boot files, usually a primary partition is mounted here
 - `/proc`: Process and kernel files like `/proc/cpuinfo`
 - `/opt`: Optional/3rd-party software
 - `/root`: The home directory of the root
@@ -52,7 +58,7 @@ SELinux is harder to use but it's more secure.
 ### Uncomplicated Firewall (UFW)
 
 A program that manages the Netfilter firewall framework, native to the Linux kernel.
-UFW ships default with Ubuntu.
+Ubuntu comes with UFW by default.
 
 ### aptitude vs. apt vs. apt-get
 
