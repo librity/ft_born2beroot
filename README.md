@@ -15,6 +15,16 @@ Windows can't boot from logical partitions, only primary one.
 A device mapper framework that provides logical volume management,
 i.e. the creation and use of logical partitions.
 
+### Encrypted volumes
+
+It's highly recommended to encrypt your logical volumes,
+especially the swap partition.
+You don't need to go crazy with the password, this isn't the NSA.
+
+<p align="center">
+  <img src="https://imgs.xkcd.com/comics/security.png">
+</p>
+
 ### systemd
 
 A software suite that provides an array of system components.

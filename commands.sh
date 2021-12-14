@@ -31,7 +31,8 @@ ifconfig -a
 route -n
 # Open the interfaces file and set the static IP with the discovered values:
 nano /etc/network/interfaces
-"source /etc/network/interfaces.d/*
+"
+source /etc/network/interfaces.d/*
 # The loopback network interface
 auto lo
 iface lo inet loopback
@@ -42,7 +43,8 @@ iface INTERFACENAME inet static
       broadcast SOMETHING
       netmask SOMETHING
       gateway SOMETHING
-iface INTERFACENAME inet static"
+iface INTERFACENAME inet static
+"
 # Reboot for changes to take effect
 reboot now
 # Check if we have internet by pinging google's DNS server
@@ -78,30 +80,12 @@ groupdel GROUPNAME
 # Adds the user to the group
 addgroup USERNAME GROUPNAME
 gpasswd -a USERNAME GROUPNAME
+# getent displays entries from system databases. Lists all users of a group
+getent group GROUPNAME
 # Removes user from group
 gpasswd -d USERNAME GROUPNAME
 # Returns user's main group GID
 id -g USERNAME
-
-# Shows user's password aging information
-chage -l USERNAME
-# Set password policy for all users by modifying
-# PAM's (Pluggable Authentication Modules) common-password  config file.
-nano /etc/pam.d/common-password
-# OPTIONS
-# pam_cracklib.so:
-# try_first_pass:
-# retry=3: Prompt a user 3 times before returning with error.
-# minlen=10: The password length cannot be less than this parameter
-# lcredit=-1: Must have at least one lowercase character.
-# ucredit=-1: Require at least one uppercase character
-# dcredit=-1: must have at least one digit
-# difok=7: The number of characters in the new password that must not have been present in the old password.
-# maxclassrepeat=2:
-# reject_username: Rejects the password if contains the name of the user in either straight or reversed form.
-# maxrepeat=3: Allow a maximum of 3 repeated characters
-# gecoscheck=1: Words in the GECOS field of the user’s passwd entry are not contained in the new password.
-# enforce_for_root: Enforce pasword policy for root user
 
 # Show hostname
 hostnamectl status
@@ -111,16 +95,81 @@ hostnamectl set-hostname NEWHOSTNAME
 # Manually change the hostname on /etc/hosts to remove sudo error:
 nano /etc/hosts
 
+# Create and delete a sudoer user
+adduser USERNAME
+addgroup USERNAME sudo
+addgroup USERNAME user42
+userdel -r USERNAME
+
+# Shows user's password aging information
+chage -l USERNAME
+# To enforce pasword change every 30 days we modify the file:
+nano /etc/login.defs
+"
+# Maximum days before password change
+PASS_MAX_DAYS 30
+# Minimum days before password change
+PASS_MIN_DAYS 2
+# Warn user 7 days before expiration
+PASS_WARN_AGE 7
+# Enforce minimum password length of 10
+PASS_MIN_LEN 10
+"
+# These configs will only apply to new user.
+# We can force them onold users with chage:
+chage -M 30 USERNAME
+chage -m 2 USERNAME
+chage -W 7 USERNAME
+chage -l USERNAME
+
+# Set password policy for all users by modifying
+# PAM's (Pluggable Authentication Modules) common-password  config file.
+nano /etc/pam.d/common-password
+"
+# 
+pam_cracklib.so:
+# 
+try_first_pass:
+# Prompt a user 3 times before returning with error.
+retry=3
+# The password length cannot be less than this parameter
+minlen=10
+# Must have at least one lowercase character.
+lcredit=-1
+# Require at least one uppercase character
+ucredit=-1
+# must have at least one digit
+dcredit=-1
+# The number of characters in the new password that must not have been present in the old password.
+difok=7
+# 
+maxclassrepeat=2:
+# Rejects the password if contains the name of the user in either straight or reversed form.
+reject_username
+# Allow a maximum of 3 repeated characters
+maxrepeat=3
+# Words in the GECOS field of the user’s passwd entry are not contained in the new password.
+gecoscheck=1
+# Enforce pasword policy for root user
+enforce_for_root
+"
+# Change currenr user's password
+passwd
+# Change password of any user, bypasses rules
+sudo chpasswd <<<"USERNAME:NEWPASSWORD"
+
 # Program that lets some users run
 sudo
 # Open sudo config file with nano or vim and add the required rules
 nano /etc/sudoers
 sudo visudo
-"Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\"
+"
+Defaults        secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin\"
 Defaults        badpass_message=\"CUSTOM MESSAGEE\"
 Defaults        requiretty
 Defaults        passwd_tries=3
-Defaults        logfile=\"/var/log/sudo/sudo.log\""
+Defaults        logfile=\"/var/log/sudo/sudo.log\"
+"
 # requiretty - If set, sudo will only run when the user is logged in to a real tty.
 # When this flag is set, sudo can only be run from a login session
 # and not via other means such as cron(8) or cgi-bin scripts.
@@ -158,8 +207,10 @@ service sshs status
 systemctl enable sshd
 # Open ssh daemon config with nano and add the rules
 nano /etc/ssh/sshd_config
-"Port 4242
-PermitRootLogin no"
+"
+Port 4242
+PermitRootLogin no
+"
 # Restart sshd and verify changes
 systemctl restart sshd
 ss -tunlp
@@ -169,6 +220,10 @@ ssh -p 4242 lpaulo-m@localhost
 # Connect through ssh through port 4242 from outside
 ssh -p 4242 root@192.168.0.15
 ssh -p 4242 lpaulo-m@192.168.0.15
+# Copy file to server
+scp -P 4242 FILEPATH lpaulo-m@192.168.0.15:DESTINATION
+# Copy file from server
+scp -P 4242 lpaulo-m@192.168.0.15:FILEPATH DESTINATION
 
 # General kernel and system information, all flags.
 uname -a
@@ -183,5 +238,5 @@ sha1sum ~/Documents/virtual_boxes/born2beroot/born2beroot.vdi
 
 # Creates a new logical volume within an LVM Group
 mkfs.ext4 /dev/LVMGROUPNAME/VOLUMENAME
-# Mounts the volume in the mountpoint
+# Mounts the volume on the mountpoint
 mount /dev/LVMGROUPNAME/VOLUMENAME MOUNTPOINT
