@@ -3,11 +3,11 @@
 <div align="center">
 
 ![42 São Paulo](https://img.shields.io/badge/42-SP-1E2952)
-![License](https://img.shields.io/github/license/librity/ft_minirt?color=yellow)
-![Code size in bytes](https://img.shields.io/github/languages/code-size/librity/ft_minirt?color=blue)
-![Lines of code](https://img.shields.io/tokei/lines/github/librity/ft_minirt?color=blueviolet)
-![Top language](https://img.shields.io/github/languages/top/librity/ft_minirt?color=ff69b4)
-![Last commit](https://img.shields.io/github/last-commit/librity/ft_minirt?color=orange)
+![License](https://img.shields.io/github/license/librity/ft_born2beroot?color=yellow)
+![Code size in bytes](https://img.shields.io/github/languages/code-size/librity/ft_born2beroot?color=blue)
+![Lines of code](https://img.shields.io/tokei/lines/github/librity/ft_born2beroot?color=blueviolet)
+![Top language](https://img.shields.io/github/languages/top/librity/ft_born2beroot?color=ff69b4)
+![Last commit](https://img.shields.io/github/last-commit/librity/ft_born2beroot?color=orange)
 
 </div>
 
@@ -19,10 +19,18 @@
 
 ## 📜 Table of Contents
 
+- [About](#about)
 - [Checklist](#checklist)
 - [Notes](#notes)
 - [42 São Paulo](#ft_sp)
 - [Resources](#resources)
+
+## 🧐 About <a name = "about"></a>
+
+In this project we learn the fundamentals of UNIX, virtualization,
+systems administration and shell scripting.
+We configure a debian server server with LVM partitions,
+write a sysinfo script and setup a wordpress website among other things.
 
 ## ✅ Checklist <a name = "checklist"></a>
 
@@ -118,10 +126,12 @@ Part of the larger [42 Network](https://www.42.fr/42-network/),
 [42 São Paulo](https://www.42sp.org.br/) is a software engineering school
 that offers a healthy alternative to traditional education:
 
-- It doesn't have any teachers or classrooms.
-- Students learn from and correct each other's work (peer-to-peer learning).
+- It doesn't have any teachers and classes.
+- Students learn by cooperating
+  and correcting each other's work (peer-to-peer learning).
 - Its focus is as much on social skills as it is on technical skills.
-- It's completely free to anyone that passes its selection process - **The Piscine**
+- It's completely free to anyone that passes its selection process -
+  [**The Piscine**](https://42.fr/en/admissions/42-piscine/)
 
 It's an amazing school, and I'm grateful for the opportunity.
 
