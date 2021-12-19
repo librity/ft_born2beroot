@@ -127,6 +127,33 @@ A suite of libraries that allows a Linux system administrator
 to configure methods to authenticate users.
 This is where we set the password policy.
 
+### CPU Core (Physical) vs Thread (Virtual)
+
+A CPU core is an independent processing unit that processes one command at a time.
+It's a physical component inside a chip, mounted on a socket on the motherboard.
+Modern chips, having multiple cores, need some way of sharing their processing
+resources with many programs at the same time.
+
+Threads solve this problem by distributing instructions to multiple cores.
+They're virtual components that manage the CPU schedule.
+
+My computer runs on an
+[Intel Core i7-7700HQ](https://www.intel.com/content/www/us/en/products/sku/97185/intel-core-i77700hq-processor-6m-cache-up-to-3-80-ghz/specifications.html).
+It has 4 cores and 8 threads.
+
+<p align="center">
+  <img src=".github/concurrency_vs_parallelism.svg">
+</p>
+
+<details>
+  <summary>Details</summary>
+  
+  <p align="center">
+    <img src=".github/cores_vs_threads.jpeg">
+  </p>
+
+</details>
+
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>
 
 Part of the larger [42 Network](https://www.42.fr/42-network/),
