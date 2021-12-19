@@ -1,6 +1,5 @@
 # Install openssh-server
 apt-get install openssh-server
-dpkg -l | grep ssh
 # systemctl allows you to control the state of systemd deamons (services)
 # Returns the status of the ssh deamon running in the background.
 systemctl status sshs

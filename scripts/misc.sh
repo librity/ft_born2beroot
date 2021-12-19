@@ -16,5 +16,20 @@ shutdown now
 reboot now
 poweroff
 
+# Search installed packages
+dpkg -l | grep PACKAGE_NAME
+# Search all available packages
+apt list | grep PACKAGE_NAME
+
+# Search previous commands
+history | grep nano
+
+# Config files changed
+nano /etc/login.defs
+nano /etc/sudoers
+nano /etc/network/interfaces
+nano /etc/ssh/sshd_config
+nano /etc/security/pwquality.conf
+
 # Generate a hash from the file
 sha1sum ~/Documents/virtual_boxes/born2beroot/born2beroot.vdi

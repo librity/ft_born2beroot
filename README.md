@@ -90,12 +90,19 @@ Manjaro, openSUSE, Red, Solus, SUSE and Ubuntu come with it by default.
 ### Security-Enhanced Linux (SELinux) vs. AppArmor
 
 They're both Linux kernel security modules.
+They both provide Mandatory Access Control (MAC).
 
 Fedora and CentOS use SELinux by default.
 Debian and Ubuntu use AppArmor by default.
 
-AppArmor is easier to use but less secure.
-SELinux is harder to use but it's more secure.
+AppArmor is easier to use but a little less secure.
+SELinux is harder to use but more secure.
+
+Before any syscall the kernel check with AppArmor or SELinux
+if the process is allowed to execute that command.
+By configuring them we can restrict the actions
+that subjects (processes) can perform
+on objects (files, IO, memory, Network ports, etc.)
 
 ### Uncomplicated Firewall (UFW)
 

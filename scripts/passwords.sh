@@ -19,36 +19,30 @@ chage -m 2 USERNAME
 chage -W 7 USERNAME
 chage -l USERNAME
 
+# Install password quality security module for PAM
+sudo apt-get install libpam-pwquality
 # Set password policy for all users by modifying
 # PAM's (Pluggable Authentication Modules) common-password  config file.
-nano /etc/pam.d/common-password
+nano /etc/security/pwquality.conf
 "
-# 
-pam_cracklib.so:
-# 
-try_first_pass:
-# Prompt a user 3 times before returning with error.
-retry=3
-# The password length cannot be less than this parameter
-minlen=10
-# Must have at least one lowercase character.
-lcredit=-1
 # Require at least one uppercase character
-ucredit=-1
-# must have at least one digit
-dcredit=-1
+ucredit = -1
+# Require at least one digit
+dcredit = -1
+# No more than 3 consecutive identical characters
+maxrepeat = 3
+# Check if it contains the username 
+usercheck = 1
 # The number of characters in the new password that must not have been present in the old password.
-difok=7
-# 
-maxclassrepeat=2:
-# Rejects the password if contains the name of the user in either straight or reversed form.
-reject_username
-# Allow a maximum of 3 repeated characters
-maxrepeat=3
-# Words in the GECOS field of the user’s passwd entry are not contained in the new password.
-gecoscheck=1
+difok = 7
 # Enforce pasword policy for root user
 enforce_for_root
+
+# OPTIONAL
+# Minimum password length of 10
+minlen = 10
+# Require at least one lowercase character
+lcredit = -1
 "
 # Change currenr user's password
 passwd
