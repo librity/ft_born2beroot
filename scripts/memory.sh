@@ -7,6 +7,3 @@ vmstat
 # Process manager
 top
 htop
-
-total_memory=
-used_memory=
