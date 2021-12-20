@@ -50,8 +50,8 @@ get_memory_usage() {
       cut -d ':' -f 2 |
       # Removes all spaces
       sed -e 's/ //g' |
-      # Remove kB ending
-      sed -e 's/kB//g'
+      # Remove all non-digit chars
+      sed -e 's/[^0-9]*//g'
   }
 
   extract_meminfo_in() {
@@ -104,32 +104,41 @@ get_memory_usage() {
 }
 
 get_disk_usage() {
-  get_raw_usage() {
+  get_raw_disk_usage() {
+    # Get the total disk usage in human readable form
     df -h --total |
-      tail -n1
+      # Get the last line
+      tail -n 1
+  }
+
+  get_clean_disk_usage() {
+    index=$1
+
+    # Get element by index
+    echo ${split_disk_usage[$index]} |
+      # Remove all non-digit chars
+      sed -e 's/[^0-9]*//g'
   }
 
   get_disk_total() {
-    echo ${split_usage[1]} |
-      sed -e 's/G//g'
+    get_clean_disk_usage 1
   }
 
   get_disk_used() {
-    echo ${split_usage[2]} |
-      sed -e 's/G//g'
+    get_clean_disk_usage 2
   }
 
   get_disk_used_percent() {
-    echo ${split_usage[4]} |
-      sed -e 's/%//g'
+    get_clean_disk_usage 4
   }
 
   build_disk_usage() {
     printf "%s/%sGB (%s%%)" $disk_used $disk_total $disk_used_percent
   }
 
-  raw_usage=$(get_raw_usage)
-  read -a split_usage <<<"$raw_usage"
+  raw_disk_usage=$(get_raw_disk_usage)
+  # Split by spaces and create an array
+  read -a split_disk_usage <<<"$raw_disk_usage"
 
   disk_total=$(get_disk_total)
   disk_used=$(get_disk_used)
@@ -138,12 +147,44 @@ get_disk_usage() {
   build_disk_usage
 }
 
+get_cpu_load() {
+  get_raw_cpu_load() {
+    # Get processor statistics
+    mpstat |
+      tail -n 1
+  }
+
+  get_cpu_idle_percent() {
+    # Get last element
+    echo ${split_cpu_load[-1]}
+  }
+
+  get_cpu_load_percent() {
+    cpu_idle_percent=$1
+
+    echo "100 - $cpu_idle_percent" |
+      bc -l
+  }
+
+  build_cpu_load() {
+    printf "%s%%" $cpu_load_percent
+  }
+
+  raw_cpu_load=$(get_raw_cpu_load)
+  read -a split_cpu_load <<<"$raw_cpu_load"
+
+  cpu_idle_percent=$(get_cpu_idle_percent)
+  cpu_load_percent=$(get_cpu_load_percent $cpu_idle_percent)
+
+  build_cpu_load
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
 memory_usage=$(get_memory_usage)
 disk_usage=$(get_disk_usage)
-cpu_load=$()
+cpu_load=$(get_cpu_load)
 last_boot=$()
 lvm_enabled=$()
 tcp_connexions=$()
