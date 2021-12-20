@@ -1,4 +1,4 @@
-#/usr/bin/bash!
+#!/usr/bin/env bash
 
 # Print commands and their arguments as they are executed. Useful for debugging
 # set -x
@@ -54,7 +54,7 @@ get_memory_usage() {
       sed -e 's/kB//g'
   }
 
-  extract_meminfo_in_mb() {
+  extract_meminfo_in() {
     target_line=$1
 
     in_kb=$(extract_from_meminfo $target_line)
@@ -64,12 +64,12 @@ get_memory_usage() {
 
   get_total_memory() {
     # Get's line 1 - "MemTotal"
-    extract_meminfo_in_mb 1
+    extract_meminfo_in 1
   }
 
   get_available_memory() {
     # Get's line 3 - "MemAvailable"
-    extract_meminfo_in_mb 3
+    extract_meminfo_in 3
   }
 
   get_used_memory() {
@@ -91,7 +91,7 @@ get_memory_usage() {
       awk '{ print substr( $0, 1, length($0)-18 ) }'
   }
 
-  function build_memory_usage() {
+  build_memory_usage() {
     printf "%s/%sMB (%s%%)" $used_memory $total_memory $used_percentage
   }
 
@@ -103,11 +103,46 @@ get_memory_usage() {
   build_memory_usage
 }
 
+get_disk_usage() {
+  get_raw_usage() {
+    df -h --total |
+      tail -n1
+  }
+
+  get_disk_total() {
+    echo ${split_usage[1]} |
+      sed -e 's/G//g'
+  }
+
+  get_disk_used() {
+    echo ${split_usage[2]} |
+      sed -e 's/G//g'
+  }
+
+  get_disk_used_percent() {
+    echo ${split_usage[4]} |
+      sed -e 's/%//g'
+  }
+
+  build_disk_usage() {
+    printf "%s/%sGB (%s%%)" $disk_used $disk_total $disk_used_percent
+  }
+
+  raw_usage=$(get_raw_usage)
+  read -a split_usage <<<"$raw_usage"
+
+  disk_total=$(get_disk_total)
+  disk_used=$(get_disk_used)
+  disk_used_percent=$(get_disk_used_percent)
+
+  build_disk_usage
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
 memory_usage=$(get_memory_usage)
-disk_usage=$()
+disk_usage=$(get_disk_usage)
 cpu_load=$()
 last_boot=$()
 lvm_enabled=$()
