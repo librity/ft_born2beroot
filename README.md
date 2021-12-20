@@ -136,23 +136,40 @@ resources with many programs at the same time.
 
 Threads solve this problem by distributing instructions to multiple cores.
 They're virtual components that manage the CPU schedule.
+They act like independent CPU
+since programs interact with them as they would a core:
+a thread receives a command,
+sends it to an available core,
+waits for it to execute and returns the value.
 
 My computer runs on an
 [Intel Core i7-7700HQ](https://www.intel.com/content/www/us/en/products/sku/97185/intel-core-i77700hq-processor-6m-cache-up-to-3-80-ghz/specifications.html).
-It has 4 cores and 8 threads.
+It has 4 cores and 8 threads, so my system monitor list it as 8 virtual CPUs.
 
 <p align="center">
   <img src=".github/concurrency_vs_parallelism.svg">
 </p>
 
-<details>
-  <summary>Details</summary>
-  
-  <p align="center">
-    <img src=".github/cores_vs_threads.jpeg">
-  </p>
+### `monitoring.sh`
 
-</details>
+We have to write a monitoring script that broadcasts every 10 minutes
+various system stats with `wall`:
+
+```bash
+# Broadcast message from root@wil (tty1) (Sun Apr 25 15:45:00 2021):
+#Architecture: Linux wil 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux
+#CPU physical : 1
+#vCPU : 1
+#Memory Usage: 74/987MB (7.50%)
+#Disk Usage: 1009/2Gb (39%)
+#CPU load: 6.7%
+#Last boot: 2021-04-25 14:45
+#LVM use: yes
+#Connexions TCP : 1 ESTABLISHED
+#User log: 1
+#Network: IP 10.0.2.15 (08:00:27:51:9b:a5)
+#Sudo : 42 cmd
+```
 
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>
 

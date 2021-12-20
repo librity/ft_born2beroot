@@ -1,8 +1,12 @@
+# Manually search group data
+grep GROUPNAME /etc/group
+grep USERNAME /etc/group
+# List of all groups
+cat /etc/group | cut -d ":" -f 1 | grep sudo
 # List groups associated with the user
 id USERNAME
 groups USERNAME
-# List of all groups
-cat /etc/group | cut -d ":" -f 1 | grep sudo
+
 # Creates a group
 groupadd GROUPNAME
 # Deletes a group
