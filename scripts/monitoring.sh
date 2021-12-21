@@ -179,13 +179,35 @@ get_cpu_load() {
   build_cpu_load
 }
 
+get_last_boot() {
+  get_last_boot_date() {
+    echo ${split_boot_info[2]}
+  }
+
+  get_last_boot_time() {
+    echo ${split_boot_info[3]}
+  }
+
+  build_last_boot() {
+    printf "%s %s" $last_boot_date $last_boot_time
+  }
+
+  raw_boot_info=$(who -b)
+  read -a split_boot_info <<<"$raw_boot_info"
+
+  last_boot_date=$(get_last_boot_date)
+  last_boot_time=$(get_last_boot_time)
+
+  build_last_boot
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
 memory_usage=$(get_memory_usage)
 disk_usage=$(get_disk_usage)
 cpu_load=$(get_cpu_load)
-last_boot=$()
+last_boot=$(get_last_boot)
 lvm_enabled=$()
 tcp_connexions=$()
 loggedin_users=$()

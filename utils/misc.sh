@@ -24,6 +24,11 @@ apt list | grep PACKAGE_NAME
 # Search previous commands
 history | grep nano
 
+# Get last boot date
+who -b
+# Get boot history
+last reboot | less
+
 # Config files changed
 nano /etc/login.defs
 nano /etc/sudoers
