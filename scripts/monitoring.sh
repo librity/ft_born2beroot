@@ -201,6 +201,25 @@ get_last_boot() {
   build_last_boot
 }
 
+get_lvm_enabled() {
+  count_available_lvs() {
+    lvdisplay |
+      grep -c available
+  }
+
+  is_lvm_enabled() {
+    if [ $available_lv_count -gt 0 ]; then
+      echo "true"
+    else
+      echo "false"
+    fi
+  }
+
+  available_lv_count=$(count_available_lvs)
+
+  is_lvm_enabled
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
@@ -208,7 +227,7 @@ memory_usage=$(get_memory_usage)
 disk_usage=$(get_disk_usage)
 cpu_load=$(get_cpu_load)
 last_boot=$(get_last_boot)
-lvm_enabled=$()
+lvm_enabled=$(get_lvm_enabled)
 tcp_connexions=$()
 loggedin_users=$()
 network_info=$()
