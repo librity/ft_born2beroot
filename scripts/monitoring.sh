@@ -180,6 +180,11 @@ get_cpu_load() {
 }
 
 get_last_boot() {
+  get_raw_boot_info() {
+    # Get the last boot date from who
+    who -b
+  }
+
   get_last_boot_date() {
     echo ${split_boot_info[2]}
   }
@@ -192,7 +197,7 @@ get_last_boot() {
     printf "%s %s" $last_boot_date $last_boot_time
   }
 
-  raw_boot_info=$(who -b)
+  raw_boot_info=$(get_raw_boot_info)
   read -a split_boot_info <<<"$raw_boot_info"
 
   last_boot_date=$(get_last_boot_date)
@@ -203,11 +208,14 @@ get_last_boot() {
 
 get_lvm_enabled() {
   count_available_lvs() {
+    # List all logical volumes with stats
     lvdisplay |
+      # Count how many are available
       grep -c available
   }
 
   is_lvm_enabled() {
+    # If available > 0
     if [ $available_lv_count -gt 0 ]; then
       echo "true"
     else
@@ -220,6 +228,28 @@ get_lvm_enabled() {
   is_lvm_enabled
 }
 
+get_loggedin_users() {
+  # Get logged-in users
+  who |
+    # Count them
+    wc -l
+}
+
+get_ip_address() {
+  # List all IP addresses for the host
+  hostname -I |
+    # Get the first one
+    cut -d " " -f 1
+}
+
+get_mac_address() {
+  # NETWORK_INTERFACE=enp0s3
+  NETWORK_INTERFACE=wlp2s0
+
+  # Get mac address of target ineterface
+  cat /sys/class/net/$NETWORK_INTERFACE/address
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
@@ -229,8 +259,9 @@ cpu_load=$(get_cpu_load)
 last_boot=$(get_last_boot)
 lvm_enabled=$(get_lvm_enabled)
 tcp_connexions=$()
-loggedin_users=$()
-network_info=$()
+loggedin_users=$(get_loggedin_users)
+ip_address=$(get_ip_address)
+mac_address=$(get_mac_address)
 sudo_commands=$()
 
 echo "
@@ -244,7 +275,8 @@ echo "
   # LVM enabled: $lvm_enabled
   # TCP Connexions: $tcp_connexions
   # Logged-in Users: $loggedin_users
-  # Network Info: $network_info
+  # IP address: $ip_address
+  # MAC address: $mac_address
   # Sudo commands: $sudo_commands
 "
 

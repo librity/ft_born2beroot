@@ -29,6 +29,9 @@ who -b
 # Get boot history
 last reboot | less
 
+# Get all IP addresses for the host
+hostname -I
+
 # Config files changed
 nano /etc/login.defs
 nano /etc/sudoers
