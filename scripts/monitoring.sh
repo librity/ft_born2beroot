@@ -73,16 +73,10 @@ get_memory_usage() {
   }
 
   get_used_memory() {
-    total_memory=$1
-    available_available=$2
-
-    expr $total_memory - $available_available
+    expr $total_memory - $available_memory
   }
 
   get_used_percentage() {
-    total_memory=$1
-    used_memory=$2
-
     # "scale" determines the decimal precission
     echo "scale=20; $used_memory / $total_memory * 100" |
       # Call basic calculator with standad math lib
@@ -97,8 +91,8 @@ get_memory_usage() {
 
   total_memory=$(get_total_memory)
   available_memory=$(get_available_memory)
-  used_memory=$(get_used_memory $total_memory $available_memory)
-  used_percentage=$(get_used_percentage $total_memory $used_memory)
+  used_memory=$(get_used_memory)
+  used_percentage=$(get_used_percentage)
 
   build_memory_usage
 }
@@ -160,8 +154,6 @@ get_cpu_load() {
   }
 
   get_cpu_load_percent() {
-    cpu_idle_percent=$1
-
     echo "100 - $cpu_idle_percent" |
       bc -l
   }
@@ -174,7 +166,7 @@ get_cpu_load() {
   read -a split_cpu_load <<<"$raw_cpu_load"
 
   cpu_idle_percent=$(get_cpu_idle_percent)
-  cpu_load_percent=$(get_cpu_load_percent $cpu_idle_percent)
+  cpu_load_percent=$(get_cpu_load_percent)
 
   build_cpu_load
 }
@@ -228,6 +220,32 @@ get_lvm_enabled() {
   is_lvm_enabled
 }
 
+get_tcp_connetions() {
+  count_established_tcp() {
+    # Get all TCP connections
+    ss -t |
+      # Count how many have Established status
+      grep -c ESTAB
+  }
+
+  tcp_status() {
+    if [ $established_tcp_count -gt 0 ]; then
+      echo "ESTABLISHED"
+    else
+      echo "NOT ESTABLISHED"
+    fi
+  }
+
+  build_tcp_connetions() {
+    printf "%s - %s" $established_tcp_count $tcp_status
+  }
+
+  established_tcp_count=$(count_established_tcp)
+  tcp_status=$(tcp_status)
+
+  build_tcp_connetions
+}
+
 get_loggedin_users() {
   # Get logged-in users
   who |
@@ -250,6 +268,15 @@ get_mac_address() {
   cat /sys/class/net/$NETWORK_INTERFACE/address
 }
 
+get_sudo_commands() {
+  # Get sudo log
+  cat /var/log/sudo/sudo.log |
+    # Count how many lines it has
+    wc -l |
+    # Divide by two (1 sudo = 2 lines)
+    awk '{print $1/2}'
+}
+
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)
 virtual_cpu_count=$(get_cpu_count)
@@ -258,11 +285,11 @@ disk_usage=$(get_disk_usage)
 cpu_load=$(get_cpu_load)
 last_boot=$(get_last_boot)
 lvm_enabled=$(get_lvm_enabled)
-tcp_connexions=$()
+tcp_connetions=$(get_tcp_connetions)
 loggedin_users=$(get_loggedin_users)
 ip_address=$(get_ip_address)
 mac_address=$(get_mac_address)
-sudo_commands=$()
+sudo_commands=$(get_sudo_commands)
 
 echo "
   # Architecture: $architecture
@@ -273,7 +300,7 @@ echo "
   # CPU load: $cpu_load
   # Last boot: $last_boot
   # LVM enabled: $lvm_enabled
-  # TCP Connexions: $tcp_connexions
+  # TCP Connections: $tcp_connetions
   # Logged-in Users: $loggedin_users
   # IP address: $ip_address
   # MAC address: $mac_address
