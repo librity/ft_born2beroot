@@ -172,30 +172,8 @@ get_cpu_load() {
 }
 
 get_last_boot() {
-  get_raw_boot_info() {
-    # Get the last boot date from who
-    who -b
-  }
-
-  get_last_boot_date() {
-    echo ${split_boot_info[2]}
-  }
-
-  get_last_boot_time() {
-    echo ${split_boot_info[3]}
-  }
-
-  build_last_boot() {
-    printf "%s %s" $last_boot_date $last_boot_time
-  }
-
-  raw_boot_info=$(get_raw_boot_info)
-  read -a split_boot_info <<<"$raw_boot_info"
-
-  last_boot_date=$(get_last_boot_date)
-  last_boot_time=$(get_last_boot_time)
-
-  build_last_boot
+  # "system up since" flag
+  uptime -s
 }
 
 get_lvm_enabled() {
@@ -291,23 +269,7 @@ ip_address=$(get_ip_address)
 mac_address=$(get_mac_address)
 sudo_commands=$(get_sudo_commands)
 
-# echo "
-#   # Architecture: $architecture
-#   # Physical CPUs (cores): $physical_cpu_count
-#   # Virtual CPUs (threads): $virtual_cpu_count
-#   # Memory Usage: $memory_usage
-#   # Disk Usage: $disk_usage
-#   # CPU load: $cpu_load
-#   # Last boot: $last_boot
-#   # LVM enabled: $lvm_enabled
-#   # TCP Connections: $tcp_connetions
-#   # Logged-in Users: $loggedin_users
-#   # IP address: $ip_address
-#   # MAC address: $mac_address
-#   # Sudo commands: $sudo_commands
-# "
-
-wall "
+report="
   # Architecture: $architecture
   # Physical CPUs (cores): $physical_cpu_count
   # Virtual CPUs (threads): $virtual_cpu_count
@@ -322,3 +284,39 @@ wall "
   # MAC address: $mac_address
   # Sudo commands: $sudo_commands
 "
+
+echo_report() {
+  echo "$report"
+}
+
+broadcast_report() {
+  wall "$report"
+}
+
+get_boot_seconds() {
+  uptime -s |
+    cut -d ":" -f 3
+}
+
+get_boot_minutes() {
+  uptime -s |
+    cut -d ":" -f 2
+}
+
+seconds_till_next_report() {
+  echo "$(get_boot_minutes) % 10 * 60 + $(get_boot_seconds)" | bc
+}
+
+echo_delayed() {
+  sleep $(seconds_till_next_report) && echo_report
+}
+
+broadcast_delayed() {
+  sleep $(seconds_till_next_report) && broadcast_report
+}
+
+# echo_report
+# broadcast_report
+
+# echo_delayed
+broadcast_delayed

@@ -25,9 +25,13 @@ apt list | grep PACKAGE_NAME
 history | grep nano
 
 # Get last boot date
+uptime -s
 who -b
 # Get boot history
 last reboot | less
+
+# Sleep for X seconds
+sleep X
 
 # Get all IP addresses for the host
 hostname -I
