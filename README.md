@@ -156,19 +156,21 @@ We have to write a monitoring script that broadcasts every 10 minutes
 various system stats with `wall`:
 
 ```bash
-# Broadcast message from root@wil (tty1) (Sun Apr 25 15:45:00 2021):
-#Architecture: Linux wil 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64 GNU/Linux
-#CPU physical : 1
-#vCPU : 1
-#Memory Usage: 74/987MB (7.50%)
-#Disk Usage: 1009/2Gb (39%)
-#CPU load: 6.7%
-#Last boot: 2021-04-25 14:45
-#LVM use: yes
-#Connexions TCP : 1 ESTABLISHED
-#User log: 1
-#Network: IP 10.0.2.15 (08:00:27:51:9b:a5)
-#Sudo : 42 cmd
+Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
+
+  # Architecture: Linux lpaulo-m42 5.10.0-9-amd64 #1 SMP Debian 5.10.70-1 (2021-09-30) x86_64 GNU/Linux
+  # Physical CPUs (cores): 2
+  # Virtual CPUs (threads): 2
+  # Memory Usage: 218/976MB (22.33%)
+  # Disk Usage: 1.1/8.0GB (15%%)
+  # CPU load: .14%
+  # Last boot: 2021-12-20 09:49
+  # LVM enabled: false
+  # TCP Connections: 2 - ESTABLISHED
+  # Logged-in Users: 2
+  # IP address: 192.168.0.15
+  # MAC address: 08:00:27:25:76:99
+  # Sudo commands: 326
 ```
 
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>

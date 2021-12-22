@@ -50,8 +50,8 @@ get_memory_usage() {
       cut -d ':' -f 2 |
       # Removes all spaces
       sed -e 's/ //g' |
-      # Remove all non-digit chars
-      sed -e 's/[^0-9]*//g'
+      # Remove kB unit
+      sed -e 's/kB//g'
   }
 
   extract_meminfo_in() {
@@ -110,8 +110,8 @@ get_disk_usage() {
 
     # Get element by index
     echo ${split_disk_usage[$index]} |
-      # Remove all non-digit chars
-      sed -e 's/[^0-9]*//g'
+      # Remove G unit
+      sed -e 's/G//g'
   }
 
   get_disk_total() {
@@ -200,10 +200,10 @@ get_last_boot() {
 
 get_lvm_enabled() {
   count_available_lvs() {
-    # List all logical volumes with stats
-    lvdisplay |
-      # Count how many are available
-      grep -c available
+    # List all block devices
+    lsblk |
+      # Count how many are logical volumes
+      grep -c lvm
   }
 
   is_lvm_enabled() {
@@ -261,11 +261,11 @@ get_ip_address() {
 }
 
 get_mac_address() {
-  # NETWORK_INTERFACE=enp0s3
-  NETWORK_INTERFACE=wlp2s0
+  # TARGET_INTERFACE=enp0s3
+  TARGET_INTERFACE=wlp2s0
 
   # Get mac address of target ineterface
-  cat /sys/class/net/$NETWORK_INTERFACE/address
+  cat /sys/class/net/$TARGET_INTERFACE/address
 }
 
 get_sudo_commands() {
@@ -291,7 +291,23 @@ ip_address=$(get_ip_address)
 mac_address=$(get_mac_address)
 sudo_commands=$(get_sudo_commands)
 
-echo "
+# echo "
+#   # Architecture: $architecture
+#   # Physical CPUs (cores): $physical_cpu_count
+#   # Virtual CPUs (threads): $virtual_cpu_count
+#   # Memory Usage: $memory_usage
+#   # Disk Usage: $disk_usage
+#   # CPU load: $cpu_load
+#   # Last boot: $last_boot
+#   # LVM enabled: $lvm_enabled
+#   # TCP Connections: $tcp_connetions
+#   # Logged-in Users: $loggedin_users
+#   # IP address: $ip_address
+#   # MAC address: $mac_address
+#   # Sudo commands: $sudo_commands
+# "
+
+wall "
   # Architecture: $architecture
   # Physical CPUs (cores): $physical_cpu_count
   # Virtual CPUs (threads): $virtual_cpu_count
@@ -306,18 +322,3 @@ echo "
   # MAC address: $mac_address
   # Sudo commands: $sudo_commands
 "
-
-# wall "
-#   # Architecture: $architecture
-#   # Physical CPUs (cores): $physical_cpu_count
-#   # Virtual CPUs (threads): $virtual_cpu_count
-#   # Memory Usage: $memory_usage
-#   # Disk Usage: $disk_usage
-#   # CPU load: $cpu_load
-#   # Last boot: $last_boot
-#   # LVM enabled: $lvm_enabled
-#   # TCP Connexions: $tcp_connexions
-#   # Logged-in Users: $loggedin_users
-#   # Network Info: $network_info
-#   # Sudo commands: $sudo_commands
-# "
