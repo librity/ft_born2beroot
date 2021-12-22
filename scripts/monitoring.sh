@@ -127,7 +127,7 @@ get_disk_usage() {
   }
 
   build_disk_usage() {
-    printf "%s/%sGB (%s%%)" $disk_used $disk_total $disk_used_percent
+    printf "%s/%sGB (%s)" $disk_used $disk_total $disk_used_percent
   }
 
   raw_disk_usage=$(get_raw_disk_usage)

@@ -173,6 +173,45 @@ Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
   # Sudo commands: 326
 ```
 
+### Arbitrary Service Ideas
+
+- [searx Search Engine](https://github.com/searx/searx)
+  - https://searx.github.io/searx/admin/installation.html
+  - https://searx.github.io/searx/admin/installation-searx.html
+  - https://searx.github.io/searx/admin/installation-docker.html
+- [phpMyAdmin](https://docs.phpmyadmin.net/en/latest/setup.html)
+- [traefik Proxy](https://github.com/traefik/traefik/)
+  - https://doc.traefik.io/traefik/getting-started/install-traefik/
+  - https://github.com/approov/debian-traefik-setup
+- [Cockpit sysadmin webview](https://github.com/cockpit-project/cockpit)
+  - https://www.techlear.com/blog/2021/10/14/how-to-install-cockpit-on-debian-11/
+- [fail2ban security](https://github.com/fail2ban/fail2ban)
+  - https://www.fail2ban.org/wiki/index.php/MANUAL_0_8#Installation
+- [vsftpd](https://github.com/InfrastructureServices/vsftpd)
+  - https://www.osradar.com/how-to-set-up-an-ftp-server-on-debian-10-buster/
+  - https://linuxconfig.org/how-to-setup-vsftpd-on-debian
+- [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-debian-10)
+- [PostgreSQL DB](https://linuxize.com/post/how-to-install-postgresql-on-debian-10/)
+- [Email](https://www.tecmint.com/setup-postfix-mail-server-in-ubuntu-debian/)
+- [DNS](https://blog.eldernode.com/private-dns-server-in-debian-10/)
+- [InterPlanetary File System](https://github.com/ipfs/go-ipfs)
+  - https://docs.ipfs.io/how-to/command-line-quick-start/#prerequisites
+- One of your web apps:
+  - Rails
+  - Go
+  - Node.js
+- A blockchain node:
+  - [https://bitcoin.org/en/full-node](https://bitcoin.org/en/full-node)
+- A mixnet node:
+  - [TOR Network Relay](<https://en.wikipedia.org/wiki/Tor_(network)>)
+    - [Relay guide](https://community.torproject.org/relay/)
+    - [Relay guide (onion link)](http://xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion/relay/)
+  - [I2P](https://en.wikipedia.org/wiki/I2P)
+  - [ZeroNet](https://en.wikipedia.org/wiki/ZeroNet)
+  - [Retroshare](https://en.wikipedia.org/wiki/Retroshare)
+  - [Tribler](https://en.wikipedia.org/wiki/Tribler)
+  - [Nym](https://github.com/nymtech/nym)
+
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>
 
 Part of the larger [42 Network](https://www.42.fr/42-network/),
