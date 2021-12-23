@@ -34,6 +34,71 @@ write a sysinfo script and setup a wordpress website among other things.
 
 ## ✅ Checklist <a name = "checklist"></a>
 
+- [x] Install Debian VM w/ correct partitions and encrypted LVM
+  - [x] Primary boot partition
+  - [x] Encrypted LVM Group
+    - [x] /
+    - [x] /swap
+    - [x] /home
+    - [x] /var
+    - [x] /srv
+    - [x] /tmp
+    - [x] /var/log
+  - [x] lpaulo-m42 hostname
+  - [x] lpaulo-m user
+- [x] Add lpaulo-m to `sudo` and `user42` groups
+- [x] Practice changing hostname
+- [x] Practice creating and deleting a sudoer user
+- [x] Install and configure `ufw`
+  - [x] Create allow rule for port 4242
+- [x] Install and configure `ssh`
+  - [x] On port 4242
+  - [x] Can't connect as root
+  - [x] Set a static IP
+- [x] Install and configure `sudo`
+  - [x] Limit authentication to 3 attempts
+  - [x] Add custom message on failed attempt
+  - [x] Log authentication attempts in `/var/log/sudo/`
+  - [x] Restrict sudo to TTY mode only
+  - [x] Restrict sudo paths to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin`
+- [x] Implement a strong password policy
+  - [x] Expire password every 30 days.
+  - [x] Wait 2 days before password change
+  - [x] Warning message 7 days before expiration
+  - [x] Minimum password length of 10
+  - [x] Must contain an uppercase letter
+  - [x] Must contain a digit
+  - [x] No more than 3 consecutive identical chars
+  - [x] Must not include username
+  - [x] New password must have at least 7 characters that are not part of the former password (except for root user)
+  - [x] Root password must comply
+  - [x] Change all users passwords after config
+- [x] Write `monitoring.sh`
+  - [x] Runs every 10 minutes from startup
+  - [x] Runs every 10 minutes (`crontab`)
+  - [x] Broadcast the following statistics to all users (`wall`)
+    - [x] The OS architecture and kernel version.
+    - [x] Number of physical processors.
+    - [x] Number of virtual processors.
+    - [x] Available RAM and percentage utilization rate
+    - [x] Current available storage and percentage utilization rate.
+    - [x] Percentage utilization rate your processors.
+    - [x] Date and time of last reboot.
+    - [x] Whether LVM is active or not.
+    - [x] Number of active connections.
+    - [x] Number of users using the server.
+    - [x] The IPv4 and MAC (Media Access Control) address.
+    - [x] Number of commands executed with the sudo
+- [ ] Bonus
+  - [x] Setup a Wordpress website
+    - [x] lighttpd
+    - [x] MariaDB
+    - [x] PHP
+    - [x] Wordpress
+  - [ ] Set up an arbitrary service
+- [ ] Backup virtual box from file explorer
+- [ ] Get virtual drive signature and add it to intra’s project repo
+
 ## 📝 Notes <a name = "notes"></a>
 
 ### Logical vs Primary Partition
@@ -211,6 +276,11 @@ Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
   - [Retroshare](https://en.wikipedia.org/wiki/Retroshare)
   - [Tribler](https://en.wikipedia.org/wiki/Tribler)
   - [Nym](https://github.com/nymtech/nym)
+
+### FastCGI
+
+Is a protocol that interfaces applications (like PHP)
+to web servers (like lighttpd and apache);
 
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>
 

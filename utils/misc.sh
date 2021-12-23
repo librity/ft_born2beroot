@@ -1,3 +1,6 @@
+# Install ripgrep (grep but better)
+apt-get install ripgrep
+
 # General kernel and system information, all flags.
 uname -a
 

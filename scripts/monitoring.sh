@@ -294,17 +294,23 @@ broadcast_report() {
 }
 
 get_boot_seconds() {
+  # Get last boot timestamp
   uptime -s |
+    # Extract its sconds
     cut -d ":" -f 3
 }
 
 get_boot_minutes() {
   uptime -s |
+    # Extract its minutes
     cut -d ":" -f 2
 }
 
 seconds_till_next_report() {
-  echo "$(get_boot_minutes) % 10 * 60 + $(get_boot_seconds)" | bc
+  # Calculate how many seconds we need to wait before broadcasting the report
+  echo "$(get_boot_minutes) % 10 * 60 + $(get_boot_seconds)" |
+    # We're basically transforming minutes to seconds and adding them together
+    bc
 }
 
 echo_delayed() {
