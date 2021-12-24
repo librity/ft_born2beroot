@@ -286,8 +286,8 @@ to web servers (like lighttpd and apache);
 
 ### Bitcoin Core and `bitcoind`
 
-I really wanted to run a bitcoin node on my server.
-I even managed to install and configure `bitcoind`,
+My goal was to run a bitcoin node on my server.
+I managed to install and configure `bitcoind`,
 but whenever I started the server it would error out
 due to insufficient disk space.
 I don't have a lot of storage space available,
@@ -295,7 +295,7 @@ so I left it as is.
 
 I really wanted to finish the config process and have a working node,
 but I learned a lot about bitcoin during the process.
-I'm sure I'll be running a full node when I get some better hardware
+I'll run a full node whenever I get some better hardware
 (I'm obsessed with blockchain and crypto if you haven't noticed yet).
 
 ### Tor **Bridge** Relay
