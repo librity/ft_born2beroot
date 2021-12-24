@@ -240,6 +240,11 @@ Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
   # Sudo commands: 326
 ```
 
+### FastCGI
+
+Is a protocol that interfaces applications (like PHP)
+to web servers (like lighttpd and apache);
+
 ### Bonus Service Ideas
 
 - [searx Search Engine](https://github.com/searx/searx)
@@ -279,10 +284,58 @@ Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
   - [Tribler](https://en.wikipedia.org/wiki/Tribler)
   - [Nym](https://github.com/nymtech/nym)
 
-### FastCGI
+### Bitcoin Core and `bitcoind`
 
-Is a protocol that interfaces applications (like PHP)
-to web servers (like lighttpd and apache);
+I really wanted to run a bitcoin node on my server.
+I even managed to install and configure `bitcoind`,
+but whenever I started the server it would error out
+due to insufficient disk space.
+I don't have a lot of storage space available,
+so I left it as is.
+
+I really wanted to finish the config process and have a working node,
+but I learned a lot about bitcoin during the process.
+I'm sure I'll be running a full node when I get some better hardware
+(I'm obsessed with blockchain and crypto if you haven't noticed yet).
+
+### Tor **Bridge** Relay
+
+Tor is a
+[mix network protocol](https://en.wikipedia.org/wiki/Mix_network)
+that allows users to hide their IP by relaying requests through a chain of
+three random proxies:
+
+1. **The Guard**
+2. **The Middle**
+3. **The Exit**
+
+<p align="center">
+  <img src=".github/mixnet.png">
+</p>
+
+The request is encrypted three times with three different keys.
+Each relay decrypts the request with its corresponding key
+and forwards it to the next except for **The Exit**,
+which forwards the request to its intended destination.
+The end receiver of the request can only see **The Exit**'s IP,
+hiding the identity of the sender.
+It can also be used to access restricted or illegal content
+in countries that censor online traffic.
+
+People from all over the world who believe in our fundamental right
+to privacy, anonymity and free speech run proxy relays
+that maintain the Tor network.
+The more relays the network has,
+the greater the amount of paths a request could take
+and the harder it is to identify the sender.
+It also runs faster.
+
+In my Debian server I installed and configured a **Bridge** Relay,
+which is a special type of **Middle** that doesn't list its IP publicly.
+Users first have to connect to to the Tor network
+to discover and use **Bridge** relays.
+It's by far the easiest relay type to setup
+and it requires the least amount of network resources.
 
 ## 🛸 42 São Paulo <a name = "ft_sp"></a>
 
