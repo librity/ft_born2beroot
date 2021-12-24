@@ -89,15 +89,17 @@ write a sysinfo script and setup a wordpress website.
     - [x] Number of users using the server.
     - [x] The IPv4 and MAC (Media Access Control) address.
     - [x] Number of commands executed with the sudo
-- [ ] Bonus
+- [x] Bonus
   - [x] Setup a Wordpress website
     - [x] lighttpd
     - [x] MariaDB
     - [x] PHP
     - [x] Wordpress
-  - [ ] Set up an arbitrary service
-- [ ] Backup virtual box from file explorer
-- [ ] Get virtual drive signature and add it to intra’s project repo
+  - [x] Set up an arbitrary service
+    - [x] `bitcoind`
+    - [x] Tor **Bridge** Relay
+- [x] Backup virtual box from file explorer
+- [x] Get virtual drive signature and add it to intra’s project repo
 
 ## 📝 Notes <a name = "notes"></a>
 
