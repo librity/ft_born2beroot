@@ -238,22 +238,31 @@ get_ip_address() {
     cut -d " " -f 1
 }
 
+get_mac_address_first_match() {
+  # Get network devices with ip utility
+  ip link |
+    # Get the first ethernet device
+    grep -m 1 link/ether |
+    # Extract the MAC address
+    cut -d ' ' -f 6
+}
+
 get_mac_address() {
-  # TARGET_INTERFACE=enp0s3
-  TARGET_INTERFACE=wlp2s0
+  TARGET_INTERFACE=enp0s3
+  # TARGET_INTERFACE=wlp2s0
 
   # Get mac address of target ineterface
   cat /sys/class/net/$TARGET_INTERFACE/address
 }
 
 get_sudo_commands() {
-  # Get sudo log
-  cat /var/log/sudo/sudo.log |
-    # Count how many lines it has
-    wc -l |
-    # Divide by two (1 sudo = 2 lines)
-    awk '{print $1/2}'
+  # Query systemd's journal for executions of sudo
+  journalctl _COMM=sudo |
+    # Count successful executions of sudo
+    grep -c COMMAND
 }
+
+get_sudo_commands
 
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)

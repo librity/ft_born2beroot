@@ -141,3 +141,4 @@ systemctl restart lighttpd
 
 # The Wordpress config menu should open on your browser
 # http://VM_IP
+# http://VM_IP/wp-login.php

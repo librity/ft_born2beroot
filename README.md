@@ -28,9 +28,9 @@
 ## 🧐 About <a name = "about"></a>
 
 In this project we learn the fundamentals of UNIX, virtualization,
-systems administration and shell scripting.
-We configure a debian server server with LVM partitions,
-write a sysinfo script and setup a wordpress website among other things.
+system administration and shell scripting.
+Among other things, we create a debian virtual machine with LVM partitions,
+write a sysinfo script and setup a wordpress website.
 
 ## ✅ Checklist <a name = "checklist"></a>
 
@@ -238,7 +238,7 @@ Broadcast message from root@lpaulo-m42 (somewhere) (Tue Dec 21 00:30:01 2021):
   # Sudo commands: 326
 ```
 
-### Arbitrary Service Ideas
+### Bonus Service Ideas
 
 - [searx Search Engine](https://github.com/searx/searx)
   - https://searx.github.io/searx/admin/installation.html
