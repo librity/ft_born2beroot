@@ -257,12 +257,10 @@ get_mac_address() {
 
 get_sudo_commands() {
   # Query systemd's journal for executions of sudo
-  journalctl _COMM=sudo |
+  journalctl -q _COMM=sudo |
     # Count successful executions of sudo
     grep -c COMMAND
 }
-
-get_sudo_commands
 
 architecture=$(get_architecture)
 physical_cpu_count=$(get_core_count)

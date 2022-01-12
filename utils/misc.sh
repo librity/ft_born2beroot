@@ -23,6 +23,8 @@ poweroff
 dpkg -l | grep PACKAGE_NAME
 # Search all available packages
 apt list | grep PACKAGE_NAME
+# Get package details
+apt show PACKAGE_NAME
 
 # Search previous commands
 history | grep nano

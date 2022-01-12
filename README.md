@@ -154,6 +154,15 @@ Manjaro, openSUSE, Red, Solus, SUSE and Ubuntu come with it by default.
 - `/mnt`: Mount directory for file systems by sysadmins
 - `/srv`: Service data, like web apps
 
+### `apt` Virtual Packages
+
+When there are different packages that would all satisfy
+the same arbitrary dependency, that dependency is given a dummy name
+and becomes a virtual package:
+a named group of packages that provide similar basic functionality.
+This allows for other packages to require dependencies without
+needing to know exactly which package is being used.
+
 ### Security-Enhanced Linux (SELinux) vs. AppArmor
 
 They're both Linux kernel security modules.
@@ -403,6 +412,11 @@ It's an amazing school, and I'm grateful for the opportunity.
 ### Hostname
 
 - [https://phoenixnap.com/kb/debian-change-hostname](https://phoenixnap.com/kb/debian-change-hostname)
+
+### Virtual Packages
+
+- https://askubuntu.com/questions/652326/whats-a-virtual-package
+- https://www.linuxquestions.org/questions/debian-26/what-is-meant-by-virtual-package-wrt-apt-get-169359/
 
 ### **AppArmor**
 
