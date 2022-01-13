@@ -153,6 +153,9 @@ Manjaro, openSUSE, Red, Solus, SUSE and Ubuntu come with it by default.
 - `/media`: Mount point for removable media
 - `/mnt`: Mount directory for file systems by sysadmins
 - `/srv`: Service data, like web apps
+- `/snap`: Where system snaps (packages that work across many different Linux distributions) are installed.
+- `/run`: Run-time variable data
+- `/sys`: Virtual directory for system information
 
 ### Security-Enhanced Linux (SELinux) vs. AppArmor
 
@@ -399,6 +402,7 @@ It's an amazing school, and I'm grateful for the opportunity.
 
 - [https://www.geeksforgeeks.org/linux-directory-structure/](https://www.geeksforgeeks.org/linux-directory-structure/)
 - [https://linuxhandbook.com/linux-directory-structure/](https://linuxhandbook.com/linux-directory-structure/)
+- https://help.ubuntu.com/lts/installation-guide/armhf/apcs02.html
 
 ### [Advanced Packaging Tool (apt)](https://thecustomizewindows.com/2014/03/what-is-advanced-packaging-tool-apt-aptitude/)
 
