@@ -154,15 +154,6 @@ Manjaro, openSUSE, Red, Solus, SUSE and Ubuntu come with it by default.
 - `/mnt`: Mount directory for file systems by sysadmins
 - `/srv`: Service data, like web apps
 
-### `apt` Virtual Packages
-
-When there are different packages that would all satisfy
-the same arbitrary dependency, that dependency is given a dummy name
-and becomes a virtual package:
-a named group of packages that provide similar basic functionality.
-This allows for other packages to require dependencies without
-needing to know exactly which package is being used.
-
 ### Security-Enhanced Linux (SELinux) vs. AppArmor
 
 They're both Linux kernel security modules.
@@ -171,14 +162,17 @@ They both provide Mandatory Access Control (MAC).
 Fedora and CentOS use SELinux by default.
 Debian and Ubuntu use AppArmor by default.
 
-AppArmor is easier to use but a little less secure.
+AppArmor is easier to use but less secure.
 SELinux is harder to use but more secure.
 
 Before any syscall the kernel check with AppArmor or SELinux
-if the process is allowed to execute that command.
+if the process is allowed to execute that command or access the file.
 By configuring them we can restrict the actions
 that subjects (processes) can perform
 on objects (files, IO, memory, Network ports, etc.)
+
+AppArmor allows access by default; policies then restrict access to objects.
+SELinux restricts access by default; policies then allow access to objects.
 
 ### Uncomplicated Firewall (UFW)
 
@@ -195,7 +189,16 @@ and it's easier to use.
 Advanced Packaging Tool (`apt`) and `apt-get` are a collection of CLI tools.
 `apt-get` was the first sub-project of `apt`.
 
-Debian comes with `apt` by default.
+Debian comes with `apt` (Advanced Package Tool) by default.
+
+### `apt` Virtual Packages
+
+When there are different packages that would all satisfy
+the same arbitrary dependency, that dependency is given a dummy name
+and becomes a virtual package:
+a named group of packages that provide similar basic functionality.
+This allows for other packages to require dependencies without
+needing to know exactly which package is being used.
 
 ### PAM (Pluggable Authentication Modules)
 
