@@ -42,11 +42,11 @@ sleep X
 hostname -I
 
 # Config files changed
-nano /etc/login.defs
-nano /etc/sudoers
 nano /etc/network/interfaces
-nano /etc/ssh/sshd_config
+nano /etc/sudoers
+nano /etc/login.defs
 nano /etc/security/pwquality.conf
+nano /etc/ssh/sshd_config
 
 # Generate a hash from the file
-sha1sum ~/Documents/virtual_boxes/born2beroot/born2beroot.vdi
+sha1sum ~/Documents/virtualbox/born2beroot/born2beroot.vdi
