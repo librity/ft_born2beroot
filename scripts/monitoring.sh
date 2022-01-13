@@ -262,21 +262,22 @@ get_sudo_commands() {
     grep -c COMMAND
 }
 
-architecture=$(get_architecture)
-physical_cpu_count=$(get_core_count)
-virtual_cpu_count=$(get_cpu_count)
-memory_usage=$(get_memory_usage)
-disk_usage=$(get_disk_usage)
-cpu_load=$(get_cpu_load)
-last_boot=$(get_last_boot)
-lvm_enabled=$(get_lvm_enabled)
-tcp_connetions=$(get_tcp_connetions)
-loggedin_users=$(get_loggedin_users)
-ip_address=$(get_ip_address)
-mac_address=$(get_mac_address)
-sudo_commands=$(get_sudo_commands)
+build_report() {
+  architecture=$(get_architecture)
+  physical_cpu_count=$(get_core_count)
+  virtual_cpu_count=$(get_cpu_count)
+  memory_usage=$(get_memory_usage)
+  disk_usage=$(get_disk_usage)
+  cpu_load=$(get_cpu_load)
+  last_boot=$(get_last_boot)
+  lvm_enabled=$(get_lvm_enabled)
+  tcp_connetions=$(get_tcp_connetions)
+  loggedin_users=$(get_loggedin_users)
+  ip_address=$(get_ip_address)
+  mac_address=$(get_mac_address)
+  sudo_commands=$(get_sudo_commands)
 
-report="
+  "
   # Architecture: $architecture
   # Physical CPUs (cores): $physical_cpu_count
   # Virtual CPUs (threads): $virtual_cpu_count
@@ -290,14 +291,17 @@ report="
   # IP address: $ip_address
   # MAC address: $mac_address
   # Sudo commands: $sudo_commands
-"
+  "
+}
 
 echo_report() {
+  report=$(build_report)
   echo "$report"
 }
 
 broadcast_report() {
-  wall "$report"
+  report=$(build_report)
+  wall report
 }
 
 get_boot_seconds() {
@@ -328,8 +332,8 @@ broadcast_delayed() {
   sleep $(seconds_till_next_report) && broadcast_report
 }
 
-# echo_report
+echo_report
 # broadcast_report
 
 # echo_delayed
-broadcast_delayed
+# broadcast_delayed
